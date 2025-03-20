@@ -1,13 +1,15 @@
 // app/page.js
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCookie } from 'cookies-next';
 import { FormLayout, FileUploadForm } from '@/components/input';
+import { Header } from '@/components/common';
 
 export default function InputPage() {
   const router = useRouter();
+  const [isUploaded, setIsUploaded] = useState(false);
   
   // 페이지 로드 시 access_token 확인
   useEffect(() => {
@@ -20,16 +22,25 @@ export default function InputPage() {
   }, [router]);
   
   const handleSuccess = () => {
-    // 성공 후 대시보드로 이동
-    router.push('/dashboard');
+    // 업로드 성공 상태 변경
+    setIsUploaded(true);
   };
 
   return (
-    <FormLayout 
-      title="엑셀 파일 업로드" 
-      description="자동 게시글에 사용할 엑셀 파일을 업로드하세요."
-    >
-      <FileUploadForm onSuccess={handleSuccess} />
-    </FormLayout>
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Header />
+      <main className="flex-1 container mx-auto px-4 py-8">
+        <FormLayout 
+          title="엑셀 파일 업로드" 
+          description={
+            isUploaded 
+              ? "파일이 성공적으로 업로드되었습니다. 아래에서 데이터를 확인하세요." 
+              : "자동 게시글에 사용할 엑셀 파일을 업로드하세요."
+          }
+        >
+          <FileUploadForm onSuccess={handleSuccess} />
+        </FormLayout>
+      </main>
+    </div>
   );
 }

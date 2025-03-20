@@ -2,8 +2,8 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Header as CommonHeader } from '@/components/common';
 import {
-  Header,
   SubHeader,
   AccountSection,
   PostSection,
@@ -54,17 +54,18 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Header />
-      <SubHeader />
-
-      <main className="container mx-auto p-4">
-        <div className="grid grid-cols-12 gap-4">
-          <AccountSection accounts={accounts} />
-          <PostSection posts={posts} />
-          <TaskSection cafes={cafes} />
-          <EditorSection />
-          <LogSection logs={logs} />
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <CommonHeader />
+      <main className="flex-1">
+        <SubHeader />
+        <div className="container mx-auto p-4">
+          <div className="grid grid-cols-12 gap-4">
+            <AccountSection accounts={accounts} />
+            <PostSection posts={posts} />
+            <TaskSection cafes={cafes} />
+            <EditorSection />
+            <LogSection logs={logs} />
+          </div>
         </div>
       </main>
     </div>

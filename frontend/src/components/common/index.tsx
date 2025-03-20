@@ -9,4 +9,5 @@ export * from './ConfirmDialog';
 export * from './Empty';
 export * from './Pagination';
 export * from './SearchInput';
-export * from './Card'; 
+export * from './Card';
+export * from './Header'; 
