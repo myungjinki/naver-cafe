@@ -6,6 +6,7 @@ interface FormFieldProps {
   label: string;
   type?: string;
   value?: string;
+  defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   required?: boolean;
@@ -20,6 +21,7 @@ export function FormField({
   label,
   type = "text",
   value,
+  defaultValue,
   onChange,
   placeholder,
   required = false,
@@ -28,6 +30,11 @@ export function FormField({
   className,
   children
 }: FormFieldProps) {
+  // 값이 제공되고 onChange 핸들러가 없는 경우를 처리
+  const inputProps = value !== undefined && !onChange 
+    ? { defaultValue: value } 
+    : { value, onChange };
+
   return (
     <div className={`space-y-2 ${className || ''}`}>
       <label 
@@ -42,11 +49,11 @@ export function FormField({
         <Input
           id={id}
           type={type}
-          value={value}
-          onChange={onChange}
           placeholder={placeholder}
           disabled={disabled}
           className={error ? "border-red-500" : ""}
+          defaultValue={defaultValue}
+          {...inputProps}
         />
       )}
       

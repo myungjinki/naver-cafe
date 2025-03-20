@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { getCookie, deleteCookie } from 'cookies-next';
@@ -12,10 +12,19 @@ interface HeaderProps {
 
 export function Header({ title = "네이버 카페 자동 글 올리기" }: HeaderProps) {
   const router = useRouter();
-  const hasToken = typeof window !== 'undefined' && getCookie('access_token') !== undefined;
+  const [hasToken, setHasToken] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  
+  // 클라이언트 측에서만 실행되는 코드
+  useEffect(() => {
+    setIsClient(true);
+    const token = getCookie('access_token');
+    setHasToken(token !== undefined);
+  }, []);
 
   const handleLogout = () => {
     deleteCookie('access_token');
+    setHasToken(false);
     router.push('/login');
   };
 
@@ -28,24 +37,26 @@ export function Header({ title = "네이버 카페 자동 글 올리기" }: Head
       </div>
       
       <nav className="flex gap-4 items-center">
-        {hasToken ? (
-          <>
-            <Link href="/dashboard" className="text-gray-600 hover:text-gray-900">
-              대시보드
+        {isClient && (
+          hasToken ? (
+            <>
+              <Link href="/dashboard" className="text-gray-600 hover:text-gray-900">
+                대시보드
+              </Link>
+              <Link href="/input" className="text-gray-600 hover:text-gray-900">
+                업로드
+              </Link>
+              <Button variant="outline" size="sm" onClick={handleLogout}>
+                로그아웃
+              </Button>
+            </>
+          ) : (
+            <Link href="/login">
+              <Button variant="outline" size="sm">
+                로그인
+              </Button>
             </Link>
-            <Link href="/input" className="text-gray-600 hover:text-gray-900">
-              업로드
-            </Link>
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              로그아웃
-            </Button>
-          </>
-        ) : (
-          <Link href="/login" passHref>
-            <Button variant="outline" size="sm">
-              로그인
-            </Button>
-          </Link>
+          )
         )}
       </nav>
     </header>

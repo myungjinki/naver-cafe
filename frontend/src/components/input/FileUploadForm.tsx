@@ -163,26 +163,14 @@ export function FileUploadForm({ onSuccess }: FileUploadFormProps) {
       )}
       
       <form className="space-y-6">
-        <SelectField 
-          label="카페 선택" 
-          options={cafeOptions} 
-          value={selectedCafe} 
-          onChange={setSelectedCafe} 
-        />
-        
+
         <FileUpload 
           label="엑셀 파일 업로드" 
           onChange={handleFileChange} 
           maxSizeMB={10}
           acceptedFileTypes=".xlsx,.xls"
         />
-        
-        <FormActions 
-          onSubmit={handleSubmit} 
-          onCancel={handleCancel}
-          isSubmitting={isSubmitting}
-          submitText="파일 업로드"
-        />
+
       </form>
       
       {/* 엑셀 데이터 표시 영역 */}

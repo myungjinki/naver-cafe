@@ -6,7 +6,12 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, type, value, onChange, defaultValue, ...props }, ref) => {
+    // value가 있는데 onChange가 없으면 defaultValue로 전환
+    const inputProps = value !== undefined && onChange === undefined 
+      ? { defaultValue: value } 
+      : { value, onChange };
+
     return (
       <input
         type={type}
@@ -15,6 +20,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           className
         )}
         ref={ref}
+        {...inputProps}
         {...props}
       />
     )
