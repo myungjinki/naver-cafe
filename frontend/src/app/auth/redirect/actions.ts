@@ -10,6 +10,8 @@ async function getAccessToken({ code }: { code: string }) {
 		const response = await fetch(request);
 		const data = await response.json();
 		console.log(data);
+		
+		// 네이버 API로부터 받은 토큰 데이터 반환
 		return data;
 	} catch (error) {
 		console.error("Error getting access token:", error);

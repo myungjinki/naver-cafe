@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import HomePage from '@/app/home/page';
+import HomePage from '@/app/input/page';
 import '@testing-library/jest-dom';
 import * as XLSX from 'xlsx';
 
